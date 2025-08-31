@@ -1,0 +1,18 @@
+
+
+Zero waste
+	.env
+	db.js
+	docker-compose.yml
+	Dockerfile
+	package.json
+	package-lock.json
+	server.js
+	db
+		init.sql
+	routes
+		authRoutes.js
+		items.js
+		trades.js
+		users.js
+	

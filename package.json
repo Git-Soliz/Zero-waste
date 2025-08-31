@@ -7,10 +7,12 @@
     "start": "node server.js"
   },
   "dependencies": {
-    "bcrypt": "^6.0.0",
-    "dotenv": "^16.6.1",
-    "express": "^4.21.2",
-    "jsonwebtoken": "^9.0.2",
-    "pg": "^8.16.3"
+    "bcryptjs": "^3.0.2",
+    "cors": "^2.8.5",
+    "create-react-app": "^5.1.0",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^8.5.1",
+    "pg": "^8.7.3"
   }
 }
