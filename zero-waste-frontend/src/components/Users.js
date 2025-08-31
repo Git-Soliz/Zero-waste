@@ -1,31 +1,28 @@
 import { useEffect, useState } from "react";
-import api from "../api";
+import axios from "axios";
 
-export default function Users() {
+export default function Users({ token }) {
   const [users, setUsers] = useState([]);
-  const [error, setError] = useState("");
 
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const res = await api.get("/users");
+        const res = await axios.get("http://localhost:5000/users", {
+          headers: { Authorization: `Bearer ${token}` }
+        });
         setUsers(res.data);
-        setError("");
       } catch (err) {
-        console.error(err.response?.data || err.message);
-        setError(err.response?.data?.message || "Error fetching users");
+        alert("Error fetching users: " + (err.response?.data?.message || err.message));
       }
     };
-    fetchUsers();
-  }, []);
+    if (token) fetchUsers();
+  }, [token]);
 
   return (
     <div>
-      {error && <p style={{ color: "red" }}>{error}</p>}
+      <h2>Users</h2>
       <ul>
-        {users.map(u => (
-          <li key={u.id}>{u.username} ({u.email})</li>
-        ))}
+        {users.map(u => <li key={u.id}>{u.username} ({u.email})</li>)}
       </ul>
     </div>
   );

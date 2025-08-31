@@ -4,22 +4,18 @@ import Login from "./components/Login";
 import Users from "./components/Users";
 
 function App() {
-  const [token, setToken] = useState(localStorage.getItem("token") || null);
-
-  const handleLogin = (jwtToken) => {
-    setToken(jwtToken);
-    localStorage.setItem("token", jwtToken);
-  };
+  const [token, setToken] = useState(null);
 
   return (
     <div>
+      <h1>Zero Waste Mainai</h1>
       {!token && (
         <>
-          <Register onLogin={handleLogin} />
-          <Login onLogin={handleLogin} />
+          <Register onLogin={setToken} />
+          <Login onLogin={setToken} />
         </>
       )}
-      {token && <Users />}
+      {token && <Users token={token} />}
     </div>
   );
 }

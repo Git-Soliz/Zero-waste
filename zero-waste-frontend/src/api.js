@@ -1,14 +1,19 @@
-import axios from "axios";
+const API_BASE = 'http://backend:5000/api'; // Use Docker service name
 
-const api = axios.create({
-  baseURL: "http://localhost:5000", // tavo backend URL
-});
+export const registerUser = async (userData) => {
+  const res = await fetch(`${API_BASE}/register`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(userData),
+  });
+  return res.json();
+};
 
-// Interceptor: automatiškai pridės token į visus protected request'us
-api.interceptors.request.use(config => {
-  const token = localStorage.getItem("token");
-  if (token) config.headers.Authorization = `Bearer ${token}`;
-  return config;
-});
-
-export default api;
+export const loginUser = async (credentials) => {
+  const res = await fetch(`${API_BASE}/login`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(credentials),
+  });
+  return res.json();
+};
