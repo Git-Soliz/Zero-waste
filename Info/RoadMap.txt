@@ -1,0 +1,73 @@
+Frontend (React / Vue)
+│
+├─ Pages:
+│   ├─ Login / Register
+│   ├─ ItemFeed (visi daiktai)
+│   ├─ ItemDetails (siūlyti mainus)
+│   ├─ MyItems (vartotojo daiktai)
+│   ├─ Trades (mainų istorija)
+│   ├─ Chat
+│   └─ Profile (verified status)
+│
+├─ Components:
+│   ├─ Navbar
+│   ├─ ItemCard
+│   ├─ TradeModal
+│   └─ VerifiedBadge
+│
+└─ API calls → Backend (Express / Django)
+
+Backend (API Server)
+│
+├─ Routes / Controllers:
+│   ├─ /auth      → register, login, JWT token
+│   ├─ /items     → CRUD daiktams
+│   ├─ /trades    → create, respond, update status
+│   ├─ /messages  → send/get messages
+│   └─ /verified  → ID + selfie submit, verify, mark verified
+│
+├─ Middleware:
+│   ├─ Auth check (JWT / Supabase)
+│   └─ Input validation
+│
+└─ Database (Supabase Postgres / PostgreSQL)
+    │
+    ├─ Users
+    │   ├─ id, username, email, password_hash, created_at
+    │   └─ verified_flag (true/false)
+    │
+    ├─ Items
+    │   ├─ id, user_id, title, description, image_url
+    │   ├─ category, status (available/reserved/traded)
+    │   └─ created_at
+    │
+    ├─ Trades
+    │   ├─ id, from_user_id, to_user_id, from_item_id, to_item_id
+    │   ├─ status (pending/accepted/rejected/completed)
+    │   └─ created_at
+    │
+    ├─ Messages
+    │   ├─ id, trade_id, sender_id, message_text, created_at
+    │
+    └─ VerifiedLogs
+        ├─ user_id, verified_at, verified_by
+        └─ status (pending/approved/rejected)
+
+File Storage (Cloudinary / Supabase Storage)
+│
+├─ Daiktų nuotraukos
+└─ ID + Selfie upload (tik patvirtinimo metu, ištrinamos po patvirtinimo)
+
+Flow – ID/Selfie Verification:
+1. User įkelia ID + Selfie → POST /verified
+2. Backend:
+   ├─ Rankiniu arba automatiškai patikrina sulyginimą
+   ├─ Jei sutampa → verified_flag = true, status = approved
+   └─ Nuotraukos ištrinamos iš storage
+3. Profile rodomas VerifiedBadge
+
+Deployment / Hosting:
+- Frontend → Vercel / Netlify
+- Backend → Railway / Render / Supabase Functions
+- DB → Supabase Postgres
+- Storage → Supabase Storage / Cloudinary
